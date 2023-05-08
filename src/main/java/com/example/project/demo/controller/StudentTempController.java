@@ -63,7 +63,6 @@ public class StudentTempController {
 
     @PutMapping("/student")
     public String update(@RequestBody StudentEntity studentEntity) {
-        String sql = "update seuccess";
         return "update success";
     }
 

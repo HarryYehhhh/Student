@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.project.demo.entity.StudentEntity;
-import com.example.project.demo.repository.StudentRepository;
+import com.example.project.demo.service.StudentService;
 
 @RestController
 public class StudentController {
 
     @Autowired
-    private StudentRepository studentRepository;
+    private StudentService studentService;
 
     @GetMapping("/students")
     public StudentEntity user() {
@@ -28,17 +28,17 @@ public class StudentController {
 
     @PostMapping("/students")
     public String insert(@RequestBody StudentEntity studentEntity) {
-        studentRepository.save(studentEntity);
+        studentService.insert(studentEntity);
         return "insert success";
     }
 
     @PutMapping("/students/{id}")
     public String update(@PathVariable Integer id, @RequestBody StudentEntity studentEntity) {
-        StudentEntity student = studentRepository.findById(id).orElse(null);
+        StudentEntity student = studentService.queryById(id);
         if (student != null) {
             student.setName(student.getName());
             student.setGender(student.getGender());
-            studentRepository.save(student);
+            studentService.insert(student);
 
             return "update success";
         } else
@@ -47,7 +47,7 @@ public class StudentController {
 
     @GetMapping("/students/{id}")
     public StudentEntity queryById(@PathVariable Integer id) {
-        StudentEntity studentEntity = studentRepository.findById(id).orElse(null);
+        StudentEntity studentEntity = studentService.queryById(id);
         return studentEntity;
     }
 }
