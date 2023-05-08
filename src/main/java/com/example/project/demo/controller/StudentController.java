@@ -1,5 +1,6 @@
 package com.example.project.demo.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import com.example.project.demo.repository.StudentRepository;
 @RestController
 public class StudentController {
 
+    @Autowired
     private StudentRepository studentRepository;
 
     @GetMapping("/students")
@@ -27,7 +29,7 @@ public class StudentController {
     @PostMapping("/students")
     public String insert(@RequestBody StudentEntity studentEntity) {
         studentRepository.save(studentEntity);
-        return "success";
+        return "insert success";
     }
 
     @PutMapping("/students/{id}")
